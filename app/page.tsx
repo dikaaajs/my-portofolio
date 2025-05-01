@@ -116,9 +116,9 @@ export default function Portfolio() {
   }, [isAutoplay, selectedProject, currentImageIndex]);
 
   return (
-    <div className="min-h-screen bg-black text-white font-satoshi">
+    <div className="min-h-screen bg-black text-white font-satoshi w-full overflow-x-hidden relative">
       {/* background */}
-      <div className="absolute w-full z-10 flex justify-center">
+      <div className="absolute !w-[110%] z-10 flex justify-center right-0 left-0">
         <Aurora
           colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
           blend={1}
@@ -127,22 +127,25 @@ export default function Portfolio() {
         />
       </div>
 
-      <div className="p-6 z-50">
+      <div className="p-6 !z-50">
         <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-8">
           {/* Left Sidebar */}
           <div className="space-y-8 mt-8">
             {/* Profile Header */}
             <div className="flex items-center gap-4">
-              <Image
-                src="/me.jpg"
-                alt="Profile"
-                width={60}
-                height={60}
-                className="rounded-xl"
-              />
-              <div>
-                <h1 className="text-2xl font-bold">Dikaaa</h1>
-                <p className="text-gray-400 font-medium">Web Developer</p>
+              <div className="w-fit h-fit relative z-30">
+                <Image
+                  src="/me.jpg"
+                  alt="Profile"
+                  width={60}
+                  height={60}
+                  className="rounded-xl z-30"
+                />
+                <div className="absolute -bottom-2 right-1 z-30">👨‍💻</div>
+              </div>
+              <div className="z-30">
+                <h1 className="text-2xl font-bold z-30">Dikaaa</h1>
+                <p className="text-gray-400 font-medium z-30">Web Developer</p>
               </div>
             </div>
 
@@ -192,14 +195,15 @@ export default function Portfolio() {
             {/* Projects Section */}
             <section>
               {/* header */}
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-satoshi font-bold underline decoration-blue-500">
+              <div className="flex justify-between items-center mb-4 z-30">
+                <h2 className="text-2xl font-satoshi font-bold underline decoration-blue-500 z-30">
                   projects
                 </h2>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsAllProjectsOpen(true)}
+                  className="z-30"
                 >
                   <span className="sr-only">View all projects</span>→
                 </Button>
