@@ -25,6 +25,9 @@ import {
 import TechStackTree from "@/components/parts/tech-stack";
 import Aurora from "@/public/background/Aurora/Aurora";
 import CertificateSection from "@/components/parts/certificate-section";
+import GetInTouchSection from "@/components/parts/get-in-section";
+import Hp3d from "@/components/parts/hp-3d";
+import { useRef } from "react";
 
 // Projects data structure
 const projects = [
@@ -68,6 +71,36 @@ export default function Portfolio() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isAutoplay, setIsAutoplay] = useState(true);
   const [isAllProjectsOpen, setIsAllProjectsOpen] = useState(false);
+  const [showHp3d, setShowHp3d] = useState(false);
+
+  // ref
+  const getInTouchRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!getInTouchRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowHp3d(true); // Munculkan jika terlihat
+        } else {
+          setShowHp3d(false); // Sembunyikan jika keluar
+        }
+      },
+      {
+        root: null, // viewport
+        threshold: 0.3, // 30% bagian terlihat
+      }
+    );
+
+    observer.observe(getInTouchRef.current);
+
+    return () => {
+      if (getInTouchRef.current) {
+        observer.unobserve(getInTouchRef.current);
+      }
+    };
+  }, []);
 
   const handleProjectClick = (project: (typeof projects)[0]) => {
     setSelectedProject(project);
@@ -117,9 +150,9 @@ export default function Portfolio() {
   }, [isAutoplay, selectedProject, currentImageIndex]);
 
   return (
-    <div className="min-h-screen bg-black text-white font-satoshi w-full overflow-x-hidden relative">
+    <div className="min-h-screen bg-black text-white font-satoshi w-full relative">
       {/* background */}
-      <div className="absolute !w-[110%] z-10 flex justify-center right-0 left-0">
+      <div className="absolute !w-[100%] z-10 flex justify-center right-0 left-0">
         <Aurora
           colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
           blend={1}
@@ -129,9 +162,9 @@ export default function Portfolio() {
       </div>
 
       <div className="p-6 !z-50">
-        <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-8 relative">
           {/* Left Sidebar */}
-          <div className="space-y-8 mt-8">
+          <div className="space-y-8 mt-8 lg:sticky lg:top-8 lg:self-start h-[50hv]">
             {/* Profile Header */}
             <div className="flex items-center gap-4">
               <div className="w-fit h-fit relative z-30">
@@ -153,39 +186,31 @@ export default function Portfolio() {
             {/* Bio */}
             <div className="space-y-6">
               <p className="text-gray-300 text-lg leading-relaxed">
-                I am a Front-End Developer with expertise in UI development, API
-                consumption, and various aspects of web and mobile application
-                development. I have extensive experience working with frameworks
-                like Next.js, Vue, and Flutter to build responsive and
-                high-performance applications. Additionally, I have a
-                understanding and experience in API development. I am always
-                eager to learn the latest technologies and apply them to
-                projects to achieve optimal results
+                I'm a Front-End Developer who loves building clean and
+                responsive UIs using Next.js, Vue, and Flutter. I also work on
+                the backend using Express and MongoDB to create full-stack apps.
+                Always curious and excited to try out new tech and make cool
+                stuff!
               </p>
             </div>
 
-            {/* Social Links */}
-            <div className="space-y-4">
-              <h3 className="font-medium underline decoration-blue-500">
-                my sosial media
-              </h3>
-              <div className="flex gap-4">
-                <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://www.linkedin.com/in/andika-rafli-7311a4248/">
-                    <Linkedin className="w-5 h-5" />
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="icon" asChild>
-                  <Link href="https://github.com/dikaaajs">
-                    <GithubIcon className="w-5 h-5" />
-                  </Link>
-                </Button>
-              </div>
+            <div
+              className={`hidden lg:block transition-all duration-1000 ease-out ${
+                showHp3d
+                  ? "opacity-100 translate-x-0 rotate-y-0"
+                  : "opacity-0 -translate-x-10 -rotate-y-45"
+              }`}
+              style={{
+                transformStyle: "preserve-3d",
+                transitionProperty: "opacity, transform",
+              }}
+            >
+              <Hp3d />
             </div>
           </div>
 
           {/* Right Content */}
-          <div className="space-y-8">
+          <div className="space-y-20">
             {/* Menu Button - Only show on mobile */}
             <div className="flex justify-end lg:hidden">
               <Button variant="ghost" size="icon">
@@ -198,7 +223,7 @@ export default function Portfolio() {
               {/* header */}
               <div className="flex justify-between items-center mb-4 z-30">
                 <h2 className="text-2xl font-satoshi font-bold underline decoration-blue-500 z-30">
-                  projects
+                  Projects
                 </h2>
                 <Button
                   variant="ghost"
@@ -239,7 +264,7 @@ export default function Portfolio() {
               {/* header */}
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-satoshi font-bold underline decoration-blue-500">
-                  tech stack
+                  Tech Stack
                 </h2>
               </div>
 
@@ -251,12 +276,25 @@ export default function Portfolio() {
               {/* header */}
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-satoshi font-bold underline decoration-blue-500">
-                  certificate and credentials
+                  Certificate & Credentials
                 </h2>
               </div>
 
               {/* body */}
               <CertificateSection />
+            </section>
+
+            {/* get in touch section */}
+            <section ref={getInTouchRef}>
+              {/* header */}
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-satoshi font-bold underline decoration-blue-500">
+                  Get In Touch
+                </h2>
+              </div>
+
+              {/* body */}
+              <GetInTouchSection />
             </section>
           </div>
         </div>
