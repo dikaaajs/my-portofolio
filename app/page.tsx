@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import TechStackTree from "@/components/parts/tech-stack";
 import Aurora from "@/public/background/Aurora/Aurora";
+import CertificateSection from "@/components/parts/certificate-section";
 
 // Projects data structure
 const projects = [
@@ -243,24 +244,19 @@ export default function Portfolio() {
               </div>
 
               <TechStackTree />
-              {/* <div className="flex gap-4">
-              <img
-                src="/tech-stack/nextjs.svg"
-                className="h-10 w-10 bg-white/30 p-2 rounded-md"
-              />
-              <img
-                src="/tech-stack/tailwind.svg"
-                className="h-10 w-10 bg-white/30 p-2 rounded-md"
-              />
-              <img
-                src="/tech-stack/mongodb.svg"
-                className="h-10 w-10 bg-white/30 p-2 rounded-md"
-              />
-              <img
-                src="/tech-stack/laravel.png"
-                className="h-10 w-10 bg-white/30 p-2 rounded-md"
-              />
-            </div> */}
+            </section>
+
+            {/* certificate section */}
+            <section>
+              {/* header */}
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-satoshi font-bold underline decoration-blue-500">
+                  certificate and credentials
+                </h2>
+              </div>
+
+              {/* body */}
+              <CertificateSection />
             </section>
           </div>
         </div>
