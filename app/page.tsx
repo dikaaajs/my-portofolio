@@ -301,7 +301,7 @@ export default function Portfolio() {
 
         {/* Project Details Modal with Image Carousel */}
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogContent className="bg-neutral-900 text-white border-neutral-800 max-w-4xl h-[90vh]">
+          <DialogContent className="bg-neutral-900 text-white border-neutral-800 max-w-4xl h-[90vh] font-satoshi">
             {selectedProject && (
               <>
                 <DialogHeader>
@@ -428,7 +428,7 @@ export default function Portfolio() {
 
         {/* All Projects Modal */}
         <Dialog open={isAllProjectsOpen} onOpenChange={setIsAllProjectsOpen}>
-          <DialogContent className="bg-neutral-900 text-white border-neutral-800 max-w-5xl w-[80%] h-[90vh] overflow-y-auto">
+          <DialogContent className="bg-neutral-900 text-white border-neutral-800 max-w-5xl w-[80%] h-[90vh] overflow-y-auto font-satoshi">
             <DialogHeader>
               <DialogTitle className="text-2xl">All Projects</DialogTitle>
               <DialogDescription className="text-neutral-400 font-medium">
